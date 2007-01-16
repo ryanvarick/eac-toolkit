@@ -1,0 +1,22 @@
+
+CHANGELOG for eac-toolkit:
+
+- 10/04/2005 - v2.0.2
+   * BUGFIX: hardware.pm - fixed a major conversion flaw in write_dac()
+
+- 09/26/2005 - Now under version control!
+   * hardware.pm/interface.pm - added report-chain() and poll-chain(),
+	two reporting tools for daisy-chained LLAs
+   * BUGFIX: interface.pm - revised poll-lla() (unstable) to use
+	ms, was using seconds; fixed an input off-by-one error
+   * BUGFIX: hardware.pm - LLA functions weren't getting written
+   * Cleaned up the directory layout a bit (added /docs)
+
+- 09/23/2005 - v2.0.1
+   * fitness.pm - Started on XOR fitness function
+   * HELPFILE - updated directions
+   * interface.pm - updated directions
+   * config.pm - Defaulted to eac4
+   * config.pm - Fixed min/max current parameters
+
+- 09/16/2005 - v2.0.0 - Initial Release

@@ -1,0 +1,103 @@
+
+BUGS OUTSTANDING:
+ * 'clean' does not reset generation counter
+ * BUG (minor): Stupid SerialPort error on exit
+    - I haven't seen this in a while (08/02/2005)
+ * BUG (minor): eog generates lots of feedback in gnome 2.12
+	* Here is a reference to fix this: http://omaha.pm.org/emails/2003/msg00256.html
+ 	* I want to capture output, perhaps using a (-e) test for file existence
+
+
+TODO:
+ * Fix poll-lla(), add sweep-lla()
+ * Fix pause()
+
+ * Autoscale toggle
+ * Implement evalutation infrastructure (fitness, etc.)
+ * Implement sample fitness functions --
+    - Evolvable XOR
+    - Minimize
+    - Character match
+    - RED algorithm
+
+--------------------------------------------------
+
+TARGETED FOR v2.1.0:
+ * Right now the genome only supports connection-based genes,
+    is this too restrictive?  Can the GA be modified to support other
+    genomes?  I suppose there is probably value in allowing user to 
+    extend the genome.  I should have thought about this!
+ * Finish hardware.pm audit --
+    - Rewrite get_gradient
+    - Implement read_dac() for uEAC
+ * BUG: Crossover is broken for values other than 3; should be n+1 points
+ * BUG: num_sources, num_sink, and num_llas should set from another set of
+    variables in globals.pm.  As it is, disabling or changing these
+    is destructive
+ * BUG:  If the EAC is reset during a run, the program will silently crash
+    - open_socket should check the integrity of the socket
+    - likewise open_serial_port should check integrity
+ * Error check hardware responses in hardware.pm (look for FxxxxxxZ)
+ * Support silicon EAC:
+    - Correct reporting
+    - How to position sources, sinks, and LLAs?
+    - What are the appropriate current values?
+ * More use of "channel" in output
+ * Abstract system calls for platform independence [?]
+ * Implement LLAs on the uEAC
+ * Replace the row-col indexing with 1A-5E indexing
+ * Add parameters and toggles to the input structures
+ * Rewrite:
+    - Indices in ga_init()
+    - EACv1 get_gene*()
+    - Gradient reporting
+ * Code AUDIT:
+    - Add 'args' notes to function signatures
+	- Consider a parser to extract signatures, etc.
+	- Signatures should be FUNCTION/args/NOTES
+	- NOTES should be indented two spaces (-1 hanging)
+    - Check for variable scope (my, warnings, strict)
+    - Add or-die clauses where necessary
+    - Check for null array values, which are interpreted as 0
+    - Check for socket errors
+    - Enable warnings, diagnostics, possibly strict
+    - Audit crash and diagnostic strings
+    - Audit comments and file descriptions
+    - Audit help statements (printh)
+    - Audit debug statements (prefix with function name)
+    - Address AUDITs, FIXMEs, and TODOs
+    - Document NOTEs and HACKs
+
+--------------------------------------------------
+
+Targeted for v2.1.0+:
+ * Strict, warnings
+ * MAJOR: Convert files to proper modules
+    - Prefix function calls with module name
+ * BUG: Convert TRUE and FALSE to Perl-native booleans
+ * GA enhancements:
+    - Support for GA initialization from a target file
+    - Support for spontaneous encoding of non-coding regions during mutation
+ * Ability to discard specific files (images, gradients, etc)
+ * Ability to completely remove datasets
+ * Ability to save parameters for future runs
+    - Possibly record GA settings after a run
+    - Possibly add timestamp information
+ * Error enhancements: I'm seeing a lot of the same errors, particularly
+    the illegal hardware flag error.  Perhaps I should think about error
+    codes that reference globals.pm [?]
+	* Yes, error and feedback strings, HOO RAH
+ * Better interface input -- up/down arrows
+
+
+
+
+
+--------------------------------------------------
+More involved plans:
+
+I want to modularize this thing.  I want hardware.pm to be an abstraction layer with
+nice little calls.  I have to rethink initialization:
+
+  hardware::set_type($V1_FOAM);
+  hardware::init($eac);

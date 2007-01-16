@@ -1,0 +1,55 @@
+HELPFILE - Quick command reference (updated 09/19/2005).
+
+  Type 'q' to exit the reference file.
+
+  Note this file is written specificially for the foam machines
+  in LH.  Refer to the manual for more information.  Refer to the
+  code for features I haven't gotten around to finishing and/or
+  documenting yet.  Email me <rvarick@indiana.edu> with questions.
+
+Program control:
+  * quit, q - exit
+  * help, h - show this page
+  * ga <number of runs> - run the genetic algorithm
+
+Hardware:
+  * hardware <flag> - change hardware protocol (default: v1-foam)
+     * supported flags: v1-foam, v1-silicon, v2-usb
+  * eac <location> - change the active eac
+     * default is: eac3.cs.indiana.edu
+
+EAC control:
+  * source/sink <channel> <current> - add source or sink
+     * channel:  1-8, current:  0-200 (uA)
+  * lla <channel> <function> - configure lla
+     * channel: 1-6, function: 1-27
+  * report-lla <channel> - reports the current an lla sees
+     * what you'll see is the amount of current going in to the
+       LLA, then the output coming out of the LLA [1]
+  * reset - set all sources and sinks to 0 uA
+  * report - get the voltage gradient values
+  * plot - create a .jpg plot of the voltage gradient
+  * view - view a voltage plot
+  * rpv <number> - shortcut for 'report plot view'
+     * <number> is the number of successive times to report the gradient
+
+Data management:
+  * clean - reset the current data directory
+  * save - create a new data directory, saving the current on
+  * load - load a previous data directory
+
+Debugging information:
+  * feedback <on|off> - toggle general feedback
+  * debug <on|off> - toggle general debug information
+  * debug-comm <on|off> - toggle communication debugging
+  * debug-logging <on|off> - toggle file I/O debugging
+  * debug-ga <on|off> - toggle GA debugging
+  * test-mode <on|off> - toggle communication with the EAC 
+
+Parameters (incomplete):
+  * current-scaling, elites, fitness-threshold, generations
+  * mutation-rate, min-current, max-currrent, noise-rate,
+  * noise-scaling, noncoding-prob, psize
+
+Toggles (incomplete):
+  * crossover, tournament-selection
