@@ -1,0 +1,98 @@
+
+CHANGELOG for eac-toolkit:
+
+- 10/23/2005
+   * ga.pm - split debugging into layers (general, genome, etc)
+   * ga.pm - sketched out a new breeding algorithm
+   * ga.pm - fixed fitness, get_best_ftiness()
+   * ga.pm - started on the evaluation routine
+   * fitness.pm - added skeleton to source control
+
+
+- 10/22/2005
+   * ga.pm - genome initialization looks like it's working (fixed
+	get_connection_type_by_index())
+
+
+
+- 10/21/2005
+   * ga.pm - further flattened genome by adding a gene_print method
+   * ga.pm - added feedback_adjustment to allow flexibility in output
+   * ga.pm - fixed get/set methods for accessing methods
+	* it looks like the basic storage strategy is working now
+
+
+
+- 10/20/2005
+   * ga.pm - fixed a bug in the way the time was being kept
+   * ga.pm - first cut at a new genome layout
+   * ga.pm - defined get/set methods for accessing the genome (broken)
+   * ga.pm - first cut at a new set of genome printing methods
+   * expanded the output of crash() to be more detailed
+   * cleanup.sh - added a shell script to remove emacs' save files
+
+
+
+- 10/17/2005
+   * ga.pm - running time is now tracked
+   * ga.pm - split up the init() system:
+	* init(), -population(), -genome(), -gene()
+   * hardware.pm - copied to the modules directory
+   * hardware.pm - started migration to package status
+   * hardware.pm - started working on a new abstraction architecture
+	* 'protocol' flag for communication details
+	* 'layout' flag for pin layout (linear vs. grid (vs. radial?))
+   * using a new flag-based crash mechanism (ga::crash() for now)
+   * ga.pm - added another output option, verbose (printg)
+	* reworked output to run through printf(), controlled by $FEEDBACK_ON
+  
+
+
+- 10/16/2005 - v2.1.0-alpha1 - MAJOR FORK
+   * New standards for v2.1:
+	* config.pm is DEPRICATED - shared globals go in the file they
+		are most commonly used in
+	* support files are stored in MODULES for now
+	* all modules are prefixed by a package name, strict declarations,
+		and warnings and diagnostics enabled
+	* all curly braces are now block aligned
+	* all globals are package referenced, even when they are in scope
+	* all function calls are package referenced
+   * ga.pm - encode() is OBSOLETE in favor of set_gene_type() and set_gene_value()
+   * ga.pm - fitness checking moved out of evaluate_population() and in to the
+	overseer function (run())
+   * ga.pm - first cut at making initialization hardware agnostic
+   * interface.pm - first cut at a more robust CLI
+	* tab completion with Term::Complete, --or--
+	* history with Term::ReadKey
+   * feedback - printf() and printd() are now local functions, for each package
+
+
+
+----------------------------------------------------------------------------------------------------
+
+- 10/04/2005 - v2.0.2
+   * BUGFIX: hardware.pm - fixed a major conversion flaw in write_dac()
+
+
+
+- 09/26/2005 - Now under version control!
+   * hardware.pm/interface.pm - added report-chain() and poll-chain(),
+	two reporting tools for daisy-chained LLAs
+   * BUGFIX: interface.pm - revised poll-lla() (unstable) to use
+	ms, was using seconds; fixed an input off-by-one error
+   * BUGFIX: hardware.pm - LLA functions weren't getting written
+   * Cleaned up the directory layout a bit (added /docs)
+
+
+
+- 09/23/2005 - v2.0.1
+   * fitness.pm - Started on XOR fitness function
+   * HELPFILE - updated directions
+   * interface.pm - updated directions
+   * config.pm - Defaulted to eac4
+   * config.pm - Fixed min/max current parameters
+
+
+
+- 09/16/2005 - v2.0.0 - Initial Release :-)
