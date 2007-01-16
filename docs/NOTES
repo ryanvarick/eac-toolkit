@@ -1,0 +1,80 @@
+
+I was thinking about all the effort I am putting in to rewriting the GA.
+
+It still assumes a very rigid genome layout.  The genes correspond to possible
+configurations at a specific position.  As I see it, this is essential to the GA.
+
+I imagine the main objection would be:
+
+  ``I want to specify a configuration with two inputs and one output, let
+    evolution figure out where to put them.''
+
+This is not incompatible with my version, which would do this by limiting the 
+number of connections.  The main difference between the above example an mine is that,
+while the first may be simpler to specify, it does not allow for easily reproduction
+of results.  That is, the placement would essentially be random at the instantiation
+level, not the configuration level.
+
+I do need a way to specify different connection types though, right now I assume no
+difference between input and output layers:
+
+
+
+I = {i1, i2, ... in}  =>  RECURRENCE (n layers) => O = {o1, o2, ... on} 
+
+  =>    /---------/      /----------/                 /----------/
+  =>   /         /      /          /                 /          /
+  =>  /         /      /          /                 /          /
+  => /---------/      /----------/                 /----------/
+
+------
+
+
+
+
+02/28
+
+As I outlined in the changelog, things have settled into a mutation, primarily:
+
+- type mutation
+- value mutation
+
+This gets back to the decision to use complex genes as part of the GA.  Traditionally,
+the GA is thought of a bitvector that manipulates a feature in a binary nature.  The EAC
+has, I believe, special properties that permit deviation.  A few points:
+
+- DNA is four-base (more or less) - this already breaks the abstraction to a bit
+	- GAs are traditionally haploids
+- Binary is digital (analog is not digital) - we're trying to break free of digital
+- GAs are search algorithms, the EAC is a closed search space, spatially bound
+
+So with that said, I use type-value pairs of predefined limites for my GA [TODO: is
+this incredibly stupid and/or naive of me?].  I motivate this because the GA seems to search
+along two axis:  placement of a component, and properties of said component.  Thus the GA
+is tracking primarily what to put things and where.  The two aren't really easily 
+seperable, in my mind.  I suppose it would look like this:
+
+type value
+ 000  000000
+
+As a bit vector.  Hmm..
+
+Also, I'm doing this in Perl, so that's a reason to avoid bitvector, even though IBM
+has thoughts on the matter.
+
+ANYWAY....
+
+Type mutation isn't really supported right now because it's not obvious how to do it
+without breaking hardware independence.  Blah.  
+
+Value mutation is the cat's pajamas.  It is made up of... noise (additive/subtractive) and
+truly random mutation.
+
+
+
+-----
+
+A note on efficiency: the GA is, overall, pretty slow.  However, since the GA will
+generally be IO-bound, I don't consider this to be too big a problem.
+
+Also, it's running in Perl.  For speed, try C.  Duh

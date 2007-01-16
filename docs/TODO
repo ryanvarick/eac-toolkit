@@ -1,0 +1,120 @@
+
+TODO:
+  * Redo high-level output
+
+new features for v2.1:
+	* new ga: better init system
+	* new ga: support for NULL inits
+	* new ga: better boolean support for feature
+
+
+
+
+NOTES for v2.1.0:
+
+ * Coding standards:
+    - [ip] Check for variable scope (my, warnings, strict)
+    - [ip] Enable warnings, diagnostics, possibly strict
+    - [ip] Audit debug statements (prefix with function name)
+    - [ip] Audit crash and diagnostic strings
+	- Trying out a new flag-based system, it needs work
+    - [ip] Function signatures
+	- function name is ALL_CAPS
+	- descriptions end with periods
+	- args/returns indented two spaces
+	- NOTE/AUDIT/HACK/FIXME follows args/returns (+1 line, +2 spaces)
+    - Audit comments and file descriptions
+    - Audit help statements (printh)
+    - Document NOTEs and HACKs
+
+  * Errors to look for:
+    - Add or-die clauses where necessary
+    - Check for null array values, which are interpreted as 0
+    - Check for socket errors
+
+  * Should I convert TRUE/FALSE to native Perl booleans?  Is it possible?
+	- NO
+ 
+  * modularization:  I'm now getting toward modularization:
+
+   file:    package <name> (lower case)*
+   others:  use <package name> (lowercase)
+   refs:    $<package>::<variable> (lowercase)
+
+	* lowercase is not recommended Perlization, but I cannot get
+	  this to work otherwise.  In any case, if I finally get things
+	  fixed, it should be a nice, quick m-x query-replace...
+
+   globals: should be
+	1) included at the top of each module
+	2) always package referenced
+
+
+   interface.pm: Either use CLI module, or implement up-down completions
+ 
+  * Implement evalutation infrastructure (fitness, etc.)
+  * Implement sample fitness functions --
+    - Evolvable XOR
+    - Minimize
+    - Character match
+    - RED algorithm
+
+
+
+BUGS OUTSTANDING:
+ * BUG: 'clean' does not reset generation counter
+ * BUG: Something is causing invalid types to crash mutate(), write(), etc.
+ * BUG (minor): Stupid SerialPort error on exit
+    - I haven't seen this in a while (08/02/2005)
+ * BUG (minor): eog generates lots of feedback in gnome 2.12
+	* Here is a reference to fix this: http://omaha.pm.org/emails/2003/msg00256.html
+ 	* I want to capture output, perhaps using a (-e) test for file existence
+
+
+GENETIC ALGORITHM:
+ * Right now the genome only supports connection-based genes,
+    is this too restrictive?  Can the GA be modified to support other
+    genomes?  I suppose there is probably value in allowing user to 
+    extend the genome.  I should have thought about this!
+ * Rewrite:
+    - Gradient reporting
+ * ga: BUG: Crossover is broken for values other than 3; should be n+1 points
+ * GA enhancements:
+    - Support for GA initialization from a target file
+    - Support for spontaneous encoding of non-coding regions during mutation
+
+HARDWARE:
+ * Finish hardware.pm audit --
+    - Rewrite get_gradient
+    - Implement read_dac() for uEAC
+ * BUG:  If the EAC is reset during a run, the program will silently crash
+    - open_socket should check the integrity of the socket
+    - likewise open_serial_port should check integrity
+ * Error check hardware responses in hardware.pm (look for FxxxxxxZ)
+ * Support silicon EAC:
+    - Correct reporting
+    - How to position sources, sinks, and LLAs?
+    - What are the appropriate current values?
+ * Implement LLAs on the uEAC
+
+
+INTERFACE
+ * Fix poll-lla(), add sweep-lla() - done??
+ * Autoscale toggle
+ * Better interface input -- up/down arrows
+ * More use of "channel" in output
+ * Abstract system calls for platform independence [?]
+ * Replace the row-col indexing with 1A-5E indexing
+ * Add parameters and toggles to the input structures
+
+
+LOGGING:
+ * Ability to discard specific files (images, gradients, etc)
+ * Ability to completely remove datasets
+
+
+GENERAL/MISC/UTIL:
+ * Fix pause() - done??
+ * Ability to save parameters for future runs
+    - Possibly record GA settings after a run
+    - Possibly add timestamp information
